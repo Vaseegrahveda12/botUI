@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOT</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+   <link rel="stylesheet" href="style.css">
+   
+   <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+.chatbox .incoming span {
+  width: 35px;
+  height: 32px;
+  color: #0c0b0b;
+  cursor: default;
+  text-align: center;
+  line-height: 32px;
+  align-self: flex-end;
+  /*background: linear-gradient(to top,#e0f1af,#e6f3c2);*/
+  border-radius: 4px;
+  margin: 2px 5px 37px 0;
+}
+.chatbox .incoming img{
+  height: 45px;
+  width: 40px;
+}
+.top{
+  height: 11vh;
+  width: 420px;
+  background-image: linear-gradient(to top,#81e3e7,#bbeef0);
+}
+.top h3{
+  width: 90%;
+  color: #fcf4f4;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding: 33px;
+  letter-spacing: 0.5px;
+}
+.header{
+  width:420px;
+  height:22%;
+  left:0px;
+  position:absolute;
+}
+.top-img{
+  width:420px;
+  height:3vh;
+  left:0px;
+  position:absolute;
+}
+.top-img img{
+  width:100%;
+  height:220%;
+  left:0px;
+  top: 0%;
+  position:absolute;
+  background-position:cover;
+}
+.chatbot-toggler {
+  position: fixed;
+  bottom: 30px;
+  right: 35px;
+  outline: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(#40cbea,#a6effc); 
+  transition: all 0.2s ease;
+}
+body.show-chatbot .chatbot-toggler {
+  transform: rotate(90deg);
+}
+.chatbot-toggler span {
+  color: #fff;
+  position: absolute;
+}
+.chatbot-toggler span:last-child,
+body.show-chatbot .chatbot-toggler span:first-child  {
+  opacity: 0;
+}
+body.show-chatbot .chatbot-toggler span:last-child {
+  opacity: 1;
+}
+.chatbot {
+  position: fixed;
+  right: 35px;
+  bottom: 90px;
+  width: 420px;
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.5);
+  transform-origin: bottom right;
+  box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
+              0 32px 64px -48px rgba(0,0,0,0.5);
+  transition: all 0.1s ease;
+
+}
+body.show-chatbot .chatbot {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+.image img{
+    height:80px;
+    width: 78px;
+    border-radius: 50%;
+    position:absolute;
+    top:10%;
+    left:3%;
+ }
+ #buttonContent {
+    display: none;
+    position:absolute;
+    top:37%;
+    left:82%;
+    color:black;
+    border-radius: 1rem 0rem 1rem 1rem ;
+    width: 7%;
+    letter-spacing: 1px;
+    height: 30px;
+    padding: 5px 5px 5px 5px;
+    background: #fff;
+  }
+  #buttonContent .bxs-bell-off{
+    font-size: larger;
+    color: rgb(7, 7, 7);
+}
+ .btn button{
+    position:absolute;
+    top:15%;
+    overflow:hidden;
+    left:87%;
+    border: none;
+    background: none;
+ }
+ .btn .bx{
+     font-size: xx-large;
+     font-weight: 400;
+     color: rgb(7, 7, 7);
+ }
+.chatbot header span {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  display: none;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+header h2 {
+  font-size: 1.4rem;
+  text-align: center;
+}
+.chatbot .chatbox {
+  overflow-y: auto;
+  height: 550px;
+  padding: 30px 20px 100px;
+}
+.chatbot :where(.chatbox, input)::-webkit-scrollbar {
+  width: 6px;
+}
+.chatbot :where(.chatbox, input)::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 25px;
+}
+.chatbot :where(.chatbox, input)::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 25px;
+}
+.chatbox .chat {
+  display: flex;
+  list-style: none;
+}
+.chatbox .outgoing {
+  margin: 20px 0;
+  justify-content: flex-end;
+}
+.chatbox .chat p {
+  white-space: pre-wrap;
+  padding: 10px 16px ;
+  border-radius: 10px 10px 0 10px;
+  max-width: 75%;
+  color: #0f0e0e;
+  font-size: 0.95rem;
+  background: linear-gradient(to top,rgb(247, 245, 245),rgb(240, 239, 239));
+}
+.chatbox .incoming p {
+  border-radius: 10px 10px 10px 0;
+}
+.chatbox .chat p.error {
+  color: #721c24;
+  background: #f8d7da;
+}
+.chatbox .incoming p {
+  color: #000;
+  background: linear-gradient(to top,#e0f1af,#e6f3c2);
+}
+.chatbot .chat-input {
+  display: flex;
+  gap: 5px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  padding-left: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+  background: linear-gradient(#40cbea,#a6effc);
+}
+.chat-input textarea {
+  height: 35px;
+  width: 500%;
+  max-width: 100%;
+  border-radius:10px;
+  border: none;
+  outline: none;
+  resize: none;
+  background-color: #fff;
+  padding-top: 10px;
+  padding-left: 10px;
+  font-size: 0.8rem;
+  overflow: hidden;
+}
+.chat-input span {
+  align-self: flex-end;
+  color: #fff;
+  cursor: pointer;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+  font-size: 2.5rem;
+  position: relative;
+  top: -10px;
+  left: -10px;
+}
+.chat-input p{
+  width: 100%;
+  text-align:center;
+  font-size:small;
+  padding: 10px;
+}
+.chat-input textarea:valid ~ span {
+  visibility: visible;
+}
+.text1{
+  width: 50%;
+  height: 25%;
+  position: absolute;
+  top: 64%;
+  left: 60%;
+  font-size:15px;
+  z-index: 1000;
+}
+.chatbot-toggler span img{
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+}
+
+@media (max-width: 490px) {
+  .chatbot-toggler {
+    right: 20px;
+    bottom: 20px;
+  }
+  .chatbot {
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    border-radius: 0;
+    width: 100%;
+  }
+  .chatbot .chatbox {
+    height: 90%;
+    padding: 25px 15px 100px;
+  }
+  .chatbot .chat-input {
+    padding: 5px 15px;
+  }
+  .chatbot header span {
+    display: block;
+  }
+  .chat-input textarea {
+  max-width: 100%;
+  }
+}
+   </style>
+</head>
+<body>
+  <form method="POST" name="chatInput">
+  <button class="chatbot-toggler">
+   <!-- <span class="material-symbols-rounded">mode_comment</span> -->
+   <span class="material-symbols-rounded"><img src="IMAGES/bothelo.jpeg" alt=""></span>
+    <span class="material-symbols-outlined">close</span>
+  </button>
+  <div class="chatbot">
+    <div class="header">
+      <div class="top"><h3>Chat with CHATTU</h3></div>
+      <div class="text1"><h6 style="color: rgba(11, 11, 12, 0.555);">POWERED BY <b style="color: #549e5f">TECH</b> <b style="color: #889f2b">VASEEGRAH</b></h6></div>
+      <div class="top-img">
+        <img src="IMAGES/wave.png" alt="">
+      </div>
+        <div class="image">
+          <img src="IMAGES/bot.jpeg" alt="">
+          </div>
+             <div class="btn">
+          </div>
+      <span class="close-btn material-symbols-outlined"></span>
+    </div>
+    <ul class="chatbox">
+      <li class="chat incoming">
+        <!--   <img src="IMAGES/bot search.jpg" alt="">
+        <span class="material-symbols-outlined">smart_toy</span>-->
+        
+        <span class="material-symbols-outlined"><img src="IMAGES/botsmall.jpeg" alt=""></span>
+      </li>
+    </ul>
+    <div class="chat-input">
+      <textarea id="my-text" placeholder="ENTER A MESSAGE..." spellcheck="false"></textarea>
+      <p id="result">0/30</p>
+      <span id="send-btn" class="material-symbols-rounded">send</span>
+      
+    </div>
+    </div>
+ 
+  </form>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+   <script>  
+  const chatbotToggler = document.querySelector(".chatbot-toggler");
+    const closeBtn = document.querySelector(".close-btn");
+    const chatbox = document.querySelector(".chatbox");
+    const chatInput = document.querySelector(".chat-input textarea");
+    const sendChatBtn = document.querySelector(".chat-input span");
+    const inputInitHeight = chatInput.scrollHeight;
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+    chatInput.focus();
+
+    document.querySelector("form[name='chatInput']").addEventListener("submit", function(e) {
+    e.preventDefault(); 
+    handleChat(); 
+});
+
+
+});
+
+    
+    const createChatLi = (message, className) => {
+         
+        const chatLi = document.createElement("li");
+        chatLi.classList.add("chat", `${className}`);
+        let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined"><img src="IMAGES/botsmall.jpeg" alt=""></span><p></p>`;
+        chatLi.innerHTML = chatContent;
+        chatLi.querySelector("p").textContent = message;
+        return chatLi; 
+    }
+        const handleChat = () => {
+        userMessage = chatInput.value.trim(); 
+        if(!userMessage) return;
+    
+        chatInput.style.height = `${inputInitHeight}px`;
+        chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+        chatbox.scrollTo(0, chatbox.scrollHeight);
+        
+        setTimeout(() => {      
+            const incomingChatLi = createChatLi("Typing...", "incoming");
+            chatbox.appendChild(incomingChatLi);
+            chatbox.scrollTo(0, chatbox.scrollHeight);
+            generateResponse(incomingChatLi);
+        }, 600);
+  
+        const generateResponse = (chatElement) => {
+          const messageElement = chatElement.querySelector("p");
+          fetch("/txt", {
+              method: "POST",
+              body: new URLSearchParams({ chatInput: userMessage }),
+              headers: {
+                  "Access-Control-Allow-Credentials": true,
+                  "Content-Type": "application/x-www-form-urlencoded"
+              }
+          })
+          .then(response => response.json())
+          .then(data => {       
+             messageElement.textContent = data.response;
+             chatInput.value = "";
+      }).catch(() => {
+         messageElement.classList.add("error");
+         messageElement.textContent = "Network Error . Please try again.";
+     }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+    
+        }
+    }
+    
+    chatInput.addEventListener("input", () => {
+        chatInput.style.height = `${inputInitHeight}px`;
+        chatInput.style.height = `${chatInput.scrollHeight}px`;
+    });
+    
+    chatInput.addEventListener("keydown", (e) => {
+        if(e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+            e.preventDefault();
+            handleChat();
+        }
+    });
+    
+    sendChatBtn.addEventListener("click", handleChat);
+    closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+    chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+  
+    chatInput.addEventListener('keydown', (event) => {
+   
+    if (event.key === 'Enter' && !event.shiftKey) {
+   
+        chatInput.value = '';
+    }
+    });
+
+const myText = document.getElementById("my-text");
+const result = document.getElementById("result");
+const limit = 30;
+
+// Function to update word count
+const updateWordCount = () => {
+  const text = myText.value.trim();
+  const words = text.split(/\s+/);
+  const wordCount = words.length;
+  result.textContent = `${wordCount}/${limit}`;
+
+  if (wordCount > limit) {
+    myText.value = words.slice(0, limit).join(" ");
+    result.textContent = `${limit}/${limit}`;
+  }
+};
+
+// Event listener for input event to update word count
+myText.addEventListener("input", updateWordCount);
+
+// Event listener for keydown event to clear word count on Enter
+chatInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    // Clear word count
+    result.textContent = `0/${limit}`;
+  }
+});
+
+
+</script>
+</body>
+
+</html>
+
+
+
+
